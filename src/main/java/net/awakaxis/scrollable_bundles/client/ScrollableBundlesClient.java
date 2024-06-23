@@ -9,6 +9,7 @@ import net.awakaxis.scrollable_bundles.Util;
 import net.awakaxis.scrollable_bundles.mixin.HandledScreenAccessor;
 import net.awakaxis.scrollable_bundles.network.ScrollBundleC2S;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.item.BundleItem;
 import net.minecraft.item.ItemStack;
 
 public class ScrollableBundlesClient implements ClientModInitializer {
@@ -22,9 +23,15 @@ public class ScrollableBundlesClient implements ClientModInitializer {
                 HandledScreenAccessor accessor = (HandledScreenAccessor) screen;
                 if (accessor.getFocusedSlot() != null && accessor.getFocusedSlot().hasStack()) {
                     ItemStack stack = accessor.getFocusedSlot().getStack();
-                    Util.scrollBundle(stack, (int) scrollDistanceY);
-                    ScrollBundleC2S.send(accessor.getHandler().syncId, accessor.getFocusedSlot().getIndex(), (int) scrollDistanceY);
-                    ScrollableBundles.LOGGER.info("scrolled on focused slot with: " + accessor.getFocusedSlot().getStack().getItem().getName());
+                    if (stack.getItem() instanceof BundleItem) {
+                        Util.scrollBundle(stack, (int) scrollDistanceY);
+                        boolean playerInv = accessor.getFocusedSlot().inventory == screen.getClient().player.getInventory();
+                        ScrollBundleC2S.send(accessor.getHandler().syncId, accessor.getFocusedSlot().getIndex(), (int) scrollDistanceY, playerInv);
+                        ScrollableBundles.LOGGER.info("scrolled on focused slot with: " + accessor.getFocusedSlot().getStack().getItem().getName());
+                        ScrollableBundles.LOGGER.info(screen.toString());
+                        ScrollableBundles.LOGGER.info("slot: " + accessor.getFocusedSlot().getIndex());
+                        ScrollableBundles.LOGGER.info("slots count: " + accessor.getHandler().slots.size());
+                    }
                 }
             }
         });
