@@ -1,0 +1,38 @@
+{
+    "schema_version": 1,
+    "quilt_loader": {
+        "group": "${group}",
+        "id": "scrollable_bundles",
+        "version": "${version}",
+        "metadata": {
+            "name": "Scrollable Bundles",
+            "description": "Lets you scroll in bundles to selectively take items out",
+            "contributors": {
+                "awakaxis": "Author"
+            },
+            "contact": {},
+            "icon": "assets/example_mod/icon.png",
+            "license": "MIT"
+        },
+        "intermediate_mappings": "net.fabricmc:intermediary",
+        "entrypoints": {
+            "init": "net.awakaxis.scrollable_bundles.ScrollableBundles",
+            "client_init": "net.awakaxis.scrollable_bundles.client.ScrollableBundlesClient"
+        },
+        "depends": [
+            {
+                "id": "quilt_loader",
+                "versions": ">=0.19.1"
+            },
+            {
+                "id": "quilted_fabric_api",
+                "versions": ">=7.0.2"
+            },
+            {
+                "id": "minecraft",
+                "versions": ">=1.20"
+            }
+        ]
+    },
+    "mixin": "scrollable_bundles.mixins.json"
+}

@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.awakaxis.scrollable_bundles.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [],
+    "client": [
+        "HandledScreenAccessor"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
